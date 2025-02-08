@@ -16,11 +16,11 @@
         <div class="content">
             <div class="settings">
                 <div class="title">Mode</div>
-                <select class="mySelect">
-                    <option>+</option>
-                    <option>-</option>
-                    <option>*</option>
-                    <option>/</option>
+                <select class="mySelect" name="mode">
+                    <option value="0">+</option>
+                    <option value="1">-</option>
+                    <option value="2">*</option>
+                    <option value="3">/</option>
                 </select>
                 <div class="title">Rounds</div>
                 <input type="number" class="myInput">
@@ -32,9 +32,26 @@
                     <div class="title">Max.</div>
                     <input type="number" class="myInput">
                 </div>
+                <div class="rowSubsection">
+                    <div class="title">Floating-point mode</div>
+                    <input type="checkbox" class="myCheckbox">
+                </div>
+                <div class="title">Max. numbers after point</div>
+                <select class="mySelect" name="maxNumbersAfterPoint" disabled>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <div class="settingsBtns">
+                    <button class="btn startBtn greenBtn">Start</button>
+                    <button class="btn resetBtn blueBtn">Reset</button>
+                </div>
             </div>
             <!-- <div class="play"></div> -->
         </div>
+        <div class="breakLine"></div>
+        <div class="footer">zero-jedynkowy - 2025</div>
     </div>
     <script src="main.js"></script>
 </body>

@@ -52,6 +52,7 @@ body
     max-width: 400px;
     padding: 1em;
     margin-bottom: 100px;
+    min-height: 1024px;
 }
 
 .settings
@@ -96,13 +97,39 @@ body
 
 .myCheckbox
 {
-    
     width: 30px;
     height: 30px;
     margin: 0 0 0 auto;
     border-radius: 5px;
     outline: none;
     border: 0;
+    cursor: pointer;
+    text-align: center;
+    font-size: 30px;
+}
+
+.myCheckbox.disabled
+{
+    transition: background-color 0.5s;
+    background-color: #c70000;
+}
+
+.myCheckbox.disabled:hover
+{
+    transition: background-color 0.5s;
+    background-color: #8a0000;
+}
+
+.myCheckbox.enabled
+{
+    transition: background-color 0.5s;
+    background-color: #00c763;
+}
+
+.myCheckbox.enabled:hover
+{
+    transition: background-color 0.5s;
+    background-color: #008542;
 }
 
 .rowSubsection > .myInput
@@ -152,4 +179,14 @@ body
     padding: 0;
     line-height: 50px;
     text-align: center;
+}
+
+
+
+
+
+.play
+{
+    display: none;
+    flex-direction: row;
 }

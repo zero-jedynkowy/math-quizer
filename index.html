@@ -19,10 +19,9 @@
                 <div class="title">Mode</div>
                 <select class="mySelect mode">
                     <option value="0">ADDITION</option>
-                    <option value="1">SUBTRACTION</option>
+                    <!-- <option value="1">SUBTRACTION</option>
                     <option value="2">MULTIPLICATION</option>
-                    <option value="3">DIVISION</option>
-                    <option value="4">ALL</option>
+                    <option value="3">DIVISION</option> -->
                 </select>
                 <div class="title">Rounds</div>
                 <input type="number" class="myInput roundsAmount">
@@ -34,6 +33,8 @@
                     <div class="title">Max.</div>
                     <input type="number" class="myInput max">
                 </div>
+                <div class="title">Numbers in the example</div>
+                <input type="number" class="myInput numbersExampleAmount">
                 <div class="rowSubsection">
                     <div class="title">Floating-point mode</div>
                     <div class="myCheckbox floatingPointMode disabled" data-state="false"></div>
@@ -49,9 +50,19 @@
                     <button class="btn aboutBtn blueBtn">About</button>
                 </div>
             </div>
-            <div class="play">
-                <div>placeHolder</div>
-                <div>placeHolder</div>
+            <div class="game">
+                <div class="gameTopBar">
+                    <div class="infoContainer roundCounter">1/2222</div>
+                    <div class="infoContainer timerCounter">231321</div>
+                </div>
+                <div class="exampleHolder">
+                    <div class="exampleHolderContent">Start in 5...</div>
+                </div>
+                <input type="number" class="myInput enterAnswer">
+                <div class="gameBtns">
+                    <button class="btn enterBtn greenBtn">Next</button>
+                    <button class="btn aboutGameBtn blueBtn">About</button>
+                </div>
             </div>
         </div>
         <div class="breakLine"></div>

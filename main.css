@@ -3,11 +3,6 @@
     font-family: "Poppins", serif;
 }
 
-:root
-{
-    --mainSize: 50px;
-}
-
 body
 {
     background-color: #313131;
@@ -137,7 +132,6 @@ body
     margin: 0;
 }
 
-
 .settingsBtns
 {
     width: 100%;
@@ -156,7 +150,7 @@ body
     border-radius: 7px;
     outline: none;
     border: 0;
-    padding: 0.25em;
+    padding: 0.25em 0.5em 0.25em 0.5em;
     min-width: 100px;
 }
 
@@ -181,12 +175,80 @@ body
     text-align: center;
 }
 
-
-
-
-
-.play
+.game
 {
     display: none;
+    flex-direction: column;
+}
+
+.gameTopBar
+{
+    width: 100%;
+    display: flex;
     flex-direction: row;
+    margin: 0 0 10px 0;
+    font-size: 1.4em;
+}
+
+.infoContainer
+{
+    font-size: 1em;
+    width: 100px;
+    text-align: center;
+}
+
+.roundCounter
+{
+    margin: 0 auto 0 0;
+}
+
+.timerCounter
+{
+    margin: 0 0 0 auto;
+}
+
+.exampleHolder
+{
+    border-radius: 15px;
+    font-size: 1.5em;
+    text-align: center;
+    width: calc(100% - 2em - 6px);
+    margin: 0 0 20px 0;
+    padding: 1em;
+    background-color: #636363;
+    border: 3px solid #636363;
+}
+
+.exampleHolder.lastAnswerCorrect
+{
+    border: 3px solid #3ac74f;
+}
+
+.exampleHolder.lastAnswerIncorrect
+{
+    border: 3px solid #c73a3a;
+}
+
+.exampleHolderContent
+{
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.enterAnswer
+{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gameBtns
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.enterBtn
+{
+    margin: 0 10px 0 0;
 }

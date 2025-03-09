@@ -252,3 +252,123 @@ body
 {
     margin: 0 10px 0 0;
 }
+
+.results
+{
+    display: none;;
+}
+
+.resultsTitle
+{
+    font-size: 2em;
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+
+.resultsBasicData
+{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.resultsBasicDataLeft
+{
+    width: auto;
+}
+
+.resultsBasicDataRight
+{
+
+    flex-grow: 1
+}
+
+.resultsBasicDataRight > *
+{
+    text-align: right;
+
+}
+
+.resultsSummarySection
+{
+    font-size: 1.1em;
+    width: 100%;
+}
+
+.resultsSummarySectionResult
+{
+    text-align: right;
+    font-size: 1.2em;
+}
+
+.resultsList
+{
+    background-color: #202020;
+    border-radius: 15px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.resultsExample
+{
+    background-color: #313131;
+    border-radius: 10px;
+    margin: 0.5em;
+    padding: 1em;
+    overflow: hidden;
+    min-height: min-content;
+    overflow-x: auto;
+}
+
+.resultsList > .resultsExample:last-of-type
+{
+    margin-bottom: 0;
+}
+
+.resultsExampleTitle
+{
+    font-size: 1.3em;
+}
+
+.resultsExampleContent
+{
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.resultsExampleContent.active
+{
+    max-height:  216px;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.resultsExampleHeader
+{
+    margin: 0.5em 0 0.5em 0;
+}
+
+.resultsExampleData
+{
+    width: 100%;
+    text-align: right;
+}
+
+.resultsBtns
+{
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0 0 0;
+}
+
+.resultsBtns > *
+{
+    margin-right: 0.5em;
+}

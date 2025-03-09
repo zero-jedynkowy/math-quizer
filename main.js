@@ -32,6 +32,11 @@ class Mode
         this.currentValues = []
     }
 
+    toString()
+    {
+        return "Mode"
+    }
+
     _generate()
     {
         let temp = Math.random() * (this.max - this.min) + this.min
@@ -83,6 +88,10 @@ class AdditionMode extends Mode
     {
         return super.stringify(" + ")
     }
+    toString()
+    {
+        return "Addition"
+    }
 }
 
 //variables
@@ -133,7 +142,22 @@ const game =
 
 const result = 
 {
-
+    ui:
+    {
+        results: null,
+        resultsList: null,
+        resultsMode: null,
+        resultsRoundsAmount: null,
+        resultsCorrectRoundsAmount: null,
+        resultsMin: null,
+        resultsMax: null,
+        resultsNumbersExampleAmount: null,
+        resultsFloatingPointMode: null,
+        resultsMaxNumbersAfterPoint: null,
+        resultsCorrectRoundsPercent: null,
+        resultsSummaryTime: null,
+        resultsAvgTimeOfAnswer: null
+    }
 }
 
 //functions
@@ -346,12 +370,11 @@ function enterAnswerAndNextExample()
 {
     if(game.isStarted)
     {
-        game.ui.roundCounter.html(`${game.roundCounter}/${settings.roundsAmount}`)
         let answer = parseFloat(game.ui.enterAnswer.val())
         if(compareNumbers(answer, game.generator.result))
         {
             game.allExamples.push(new ExampleEntry(
-                game.generator.stringify,
+                game.generator.stringify(),
                 game.generator.result,
                 answer,
                 game.timerCounter,
@@ -363,7 +386,7 @@ function enterAnswerAndNextExample()
         else
         {
             game.allExamples.push(new ExampleEntry(
-                game.generator.stringify,
+                game.generator.stringify(),
                 game.generator.result,
                 answer,
                 game.timerCounter,
@@ -374,10 +397,11 @@ function enterAnswerAndNextExample()
         }
         game.timerCounter = 0
         game.roundCounter += 1
-        if(!game.roundCounter > settings.roundsAmount)
+        if(!(game.roundCounter > settings.roundsAmount))
         {
             game.generator.generateExample()
             game.ui.exampleHolderContent.html(game.generator.stringify())
+            game.ui.roundCounter.html(`${game.roundCounter}/${settings.roundsAmount}`)
         }
         else
         {
@@ -385,10 +409,13 @@ function enterAnswerAndNextExample()
             game.isStarted = false
             game.ui.game.fadeOut(500, () => 
             {
-                settings.ui.settings.fadeIn(500)
+                initResultUI()
+                result.ui.results.fadeIn(500)
+                updateResultUI()
             })
         }
     }
+    game.ui.enterAnswer.val("")
 }
 
 function initGameActions()
@@ -418,6 +445,7 @@ function startGame()
     chooseGameMode(settings.mode)
     game.allExamples = []
     game.generator.generateExample()
+    game.roundCounter = 1
     game.interval = setInterval(() => 
     {
         counter -= 1
@@ -437,6 +465,81 @@ function startGame()
     }, 1000)
 }
 
+//result
+function initResultUI()
+{
+    result.ui.results = $(".results")
+    result.ui.resultsList = $(".resultsList")
+    result.ui.resultsMode = $(".resultsMode")
+    result.ui.resultsRoundsAmount = $(".resultsRoundsAmount")
+    result.ui.resultsCorrectRoundsAmount = $(".resultsCorrectRoundsAmount")
+    result.ui.resultsMin = $(".resultsMin")
+    result.ui.resultsMax = $(".resultsMax")
+    result.ui.resultsNumbersExampleAmount = $(".resultsNumbersExampleAmount")
+    result.ui.resultsFloatingPointMode = $(".resultsFloatingPointMode")
+    result.ui.resultsMaxNumbersAfterPoint = $(".resultsMaxNumbersAfterPoint")
+    result.ui.resultsCorrectRoundsPercent = $(".resultsCorrectRoundsPercent")
+    result.ui.resultsSummaryTime = $(".resultsSummaryTime")
+    result.ui.resultsAvgTimeOfAnswer = $(".resultsAvgTimeOfAnswer")
+}
+
+async function updateResultUI()
+{
+    result.ui.resultsMode.html(game.generator.toString())
+    result.ui.resultsRoundsAmount.html(settings.roundsAmount)
+    result.ui.resultsCorrectRoundsAmount.html(game.allExamples.filter((element) => element.wasCorrect).length)
+    result.ui.resultsMin.html(settings.min)
+    result.ui.resultsMax.html(settings.max)
+    result.ui.resultsNumbersExampleAmount.html(settings.numbersExampleAmount)
+    result.ui.resultsFloatingPointMode.html(settings.floatingPointMode? "Yes" : "No")
+    result.ui.resultsMaxNumbersAfterPoint.html(settings.maxNumbersAfterPoint)
+    result.ui.resultsCorrectRoundsPercent.html(`${Math.round((game.allExamples.filter((element) => element.wasCorrect).length / settings.roundsAmount) * 100)}%`)
+    result.ui.resultsSummaryTime.html(game.allExamples.reduce((acc, element) => acc + element.time, 0).toFixed(2) + " s")
+    let tempTime = (game.allExamples.reduce((acc, element) => acc + element.time, 0) / game.allExamples.length).toFixed(2)
+    tempTime = tempTime.toString() + " s"
+    result.ui.resultsAvgTimeOfAnswer.html(tempTime)
+    initResultEntries()
+}
+
+function showHideDetailsExampleEntry(e)
+{
+    console.log(e.currentTarget.dataset)
+    console.log(e.currentTarget.dataset["entryId"])
+    let temp = e.currentTarget.dataset["entryId"]
+    console.log(temp)
+    document.querySelector('.resultsExampleContent[data-entry-id="' + temp + '"]').classList.toggle('active')
+}
+
+function initResultEntries()
+{
+    game.allExamples.forEach((element, index) => 
+    {
+        createResultEntryUI(index + 1, element.exampleStr, element.userAnswer, element.answer, element.time)
+    });
+    document.querySelectorAll('.resultsExample').forEach((element) =>
+    {
+        element.addEventListener('click', showHideDetailsExampleEntry)
+    })    
+}
+
+function createResultEntryUI(id, exampleStr, userAnswer, correctAnswer, time)
+{
+    let body = `<div class="resultsExample" data-entry-id="${id}">
+                        <div class="resultsExampleTitle">Example no. ${id}</div>
+                        <div class="resultsExampleContent" data-entry-id="${id}">
+                            <div class="resultsExampleExample resultsExampleData">${exampleStr}</div>
+                            <div class="resultsExampleHeader">User answer:</div>
+                            <div class="resultsExampleUserAnswer resultsExampleData">${userAnswer}</div>
+                            <div class="resultsExampleHeader">Correct answer:</div>
+                            <div class="resultsExampleUserCorrectAnswer resultsExampleData">${correctAnswer}</div>
+                            <div class="resultsExampleHeader">Time:</div>
+                            <div class="resultsExampleUserCorrectAnswer resultsExampleData">${time} s</div>
+                        </div>
+                    </div>`
+    result.ui.resultsList.html(result.ui.resultsList.html() + body)
+}
+
+
 
 //main
 $(window).on('load', (e) => 
@@ -448,5 +551,18 @@ $(window).on('load', (e) =>
         initGame()
         initGameUI()
         initGameActions()
+
+
+        // $('.resultsExample').on('click', () =>
+        // {
+        //     if(!$('.resultsExampleContent').hasClass('active'))
+        //     {
+        //         $('.resultsExampleContent').addClass('active')
+        //     }
+        //     else
+        //     {
+        //         $('.resultsExampleContent').removeClass('active')
+        //     }
+        // })
     }
 )
